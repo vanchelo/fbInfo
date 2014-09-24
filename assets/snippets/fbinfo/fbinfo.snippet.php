@@ -46,7 +46,7 @@ require_once 'fbcache.class.php';
 $fbCache = FbCache::instance();
 
 if (!$page = $fbCache->get($namespace, $id, $expiretime)) {
-	require_once 'functions.inc.php';
+	require_once 'helpers.inc.php';
 	$graphdata = fileGetContents("http://graph.facebook.com/{$id}");
 	$page = json_decode($graphdata, true);
 
