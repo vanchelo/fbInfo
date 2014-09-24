@@ -17,7 +17,7 @@ Link: [[fbInfo? &id=`nailtone` &field=`link`]]<br>
 Likes: [[fbInfo? &id=`nailtone` &field=`likes`]]
 ```
 
-####Output:
+####Output
 ```
 Name: Nail Tone Studio
 Link: https://www.facebook.com/nailtone

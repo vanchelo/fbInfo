@@ -5,15 +5,16 @@
  * Returns the spicific field for a facebook fanpage (via the graph api)
  *
  * @author vanchelo <brezhnev.ivan@yahoo.com>
- * @version 1.0.2 - 2012-05-10
+ * @version 1.0.0 - 2014-09-24
  *
  * OPTIONS
- * id - the facebook id of your fanpage
- * expiretime - lifetime of the cache in seconds (default: "10800", 3 hours)
+ * id - the facebook id of your page
+ * expiretime - lifetime of the cache in seconds (default: "10800", 180 min, 3 hours)
  * field - Specific page field
  *
  * EXAMPLE
- * [!fbInfo? &id=`19110642979` &expiretime=`10800` &field=`likes`!]
+ * [!fbInfo? &id=`nailtone` &field=`likes`!]
+ * [!fbInfo? &id=`nailtone` &expiretime=`10800` &field=`likes`!]
  *
  * fbInfo is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
