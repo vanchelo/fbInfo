@@ -27,6 +27,9 @@
  *
  */
 
+require_once 'helpers.inc.php';
+require_once 'fbcache.class.php';
+
 // Page ID
 $id = isset($id) ? (string) $id : null;
 // Page field
@@ -42,13 +45,11 @@ if (!$field) {
 	return 'You need to specify the field (&field=`` parameter)!';
 }
 
-require_once 'fbcache.class.php';
 $fbCache = FbCache::instance();
 
 if (!$page = $fbCache->get($namespace, $id, $expiretime)) {
-	require_once 'helpers.inc.php';
-	$graphdata = fileGetContents("http://graph.facebook.com/{$id}");
-	$page = json_decode($graphdata, true);
+	$response = fileGetContents("http://graph.facebook.com/{$id}");
+	$page = json_decode($response, true);
 
 	if (!$page || !is_array($page)) {
 		return 'Data currently not available.';
@@ -57,4 +58,4 @@ if (!$page = $fbCache->get($namespace, $id, $expiretime)) {
 	$fbCache->put($page, $namespace, $id);
 }
 
-return isset($page[$field]) ? $page[$field] : '';
+return array_get($page, $field, '');
