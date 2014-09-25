@@ -29,7 +29,7 @@ Vkontakte groups info for MODX Evolution
 
 ##Setup
 1. Copy this repository contents into your website folder
-2. Create snippet `fbInfo` with this content:
+2. Create snippet `vkInfo` with this content:
 ```php
 <?php
 return require MODX_BASE_PATH . 'assets/snippets/fbinfo/vbinfo.snippet.php';
