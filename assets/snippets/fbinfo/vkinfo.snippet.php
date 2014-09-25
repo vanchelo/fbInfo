@@ -2,7 +2,7 @@
 /**
  * vkInfo
  *
- * Returns the spicific field for a vkontakte group (via the api)
+ * Returns the spicific field for a vkontakte group (via VK API)
  *
  * @author vanchelo <brezhnev.ivan@yahoo.com>
  * @version 1.0.0 - 2014-09-24
