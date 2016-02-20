@@ -4,7 +4,7 @@
  *
  * Returns the spicific field for a facebook fanpage (via the graph api)
  *
- * @author vanchelo <brezhnev.ivan@yahoo.com>
+ * @author  vanchelo <brezhnev.ivan@yahoo.com>
  * @version 1.0.0 - 2014-09-24
  *
  * OPTIONS
@@ -24,7 +24,6 @@
  * fbInfo is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
  */
 
 require_once 'helpers.inc.php';
@@ -38,24 +37,24 @@ $expiretime = isset($expiretime) ? (int) $expiretime : 10800;
 $namespace = 'fbinfo';
 
 if (!$id) {
-	return 'You need to specify the fanpage id (&id=`` parameter)!';
+    return 'You need to specify the fanpage id (&id=`` parameter)!';
 }
 
 if (!$field) {
-	return 'You need to specify the field (&field=`` parameter)!';
+    return 'You need to specify the field (&field=`` parameter)!';
 }
 
-$fbCache = FbCache::instance();
+$cache = FbCache::instance();
 
-if (!$page = $fbCache->get($namespace, $id, $expiretime)) {
-	$response = fileGetContents("http://graph.facebook.com/{$id}");
-	$page = json_decode($response, true);
+if (!$page = $cache->get($namespace, $id, $expiretime)) {
+    $response = fileGetContents("http://graph.facebook.com/{$id}");
+    $page = json_decode($response, true);
 
-	if (!$page || !is_array($page)) {
-		return 'Data currently not available.';
-	}
+    if (!$page || !is_array($page)) {
+        return 'Data currently not available.';
+    }
 
-	$fbCache->put($page, $namespace, $id);
+    $cache->put($page, $namespace, $id);
 }
 
 return array_get($page, $field, '');

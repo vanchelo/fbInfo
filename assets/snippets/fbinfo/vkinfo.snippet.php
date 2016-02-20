@@ -4,7 +4,7 @@
  *
  * Returns the spicific field for a vkontakte group (via VK API)
  *
- * @author vanchelo <brezhnev.ivan@yahoo.com>
+ * @author  vanchelo <brezhnev.ivan@yahoo.com>
  * @version 1.0.0 - 2014-09-24
  *
  * OPTIONS
@@ -25,41 +25,40 @@
  * vkInfo is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
  */
 
 require_once 'helpers.inc.php';
 require_once 'fbcache.class.php';
 
 // Group ID
-$id = isset($id) ? (string)$id : null;
-// GRoup field
+$id = isset($id) ? (string) $id : null;
+// Group field
 $field = isset($field) ? $field : null;
-$lang = isset($lang) ? (string)$lang : 'ru';
-$expiretime = isset($expiretime) ? (int)$expiretime : 10800;
+$lang = isset($lang) ? (string) $lang : 'ru';
+$expiretime = isset($expiretime) ? (int) $expiretime : 10800;
 $namespace = 'vkInfo';
 
-if ( ! $id) {
-	return 'You need to specify the group id (&id=`` parameter)!';
+if (!$id) {
+    return 'You need to specify the group id (&id=`` parameter)!';
 }
 
-if ( ! $field) {
-	return 'You need to specify the field (&field=`` parameter)!';
+if (!$field) {
+    return 'You need to specify the field (&field=`` parameter)!';
 }
 
-$fbCache = FbCache::instance();
+$cache = FbCache::instance();
 
-if ( ! $page = $fbCache->get($namespace, $id, $expiretime)) {
-	$response = fileGetContents("http://api.vk.com/method/groups.getById?v=5.24&lang={$lang}&group_id={$id}&fields=city,country,place,description,wiki_page,members_count,counters,start_date,finish_date,can_post,can_see_all_posts,activity,status,contacts,links,fixed_post,verified,site");
-	$response = json_decode($response, true);
+if (!$page = $cache->get($namespace, $id, $expiretime)) {
+    $response = fileGetContents("http://api.vk.com/method/groups.getById?v=5.24&lang={$lang}&group_id={$id}&fields=city,country,place,description,wiki_page,members_count,counters,start_date,finish_date,can_post,can_see_all_posts,activity,status,contacts,links,fixed_post,verified,site");
+    $response = json_decode($response, true);
 
-	if ( ! $response || ! is_array($response) || ! isset($response['response'][0])) {
-		return 'Data currently not available.';
-	}
+    if (!$response || !is_array($response) || !isset($response['response'][0])) {
+        return 'Data currently not available.';
+    }
 
-	$page = $response['response'][0];
+    $page = $response['response'][0];
 
-	$fbCache->put($page, $namespace, $id);
+    $cache->put($page, $namespace, $id);
 }
 
 return array_get($page, $field, '');
